@@ -1,66 +1,6 @@
 import numpy as np
 from numpy import genfromtxt
 
-def system_samplesize(sys_name):
-    """
-    Define the training sample size of different datasets
-    
-    Args:
-        sys_name: [string] the name of the dataset
-    """
-    l = np.linspace(0.01, 0.15, 15)
-
-    if (sys_name == 'x264'):
-        N_train_all = np.multiply(16, [1, 2, 4, 6])  # This is for X264
-    elif (sys_name == 'BDBJ'):
-        #N_train_all = (l * 180).astype('int')
-        N_train_all = np.multiply(26, [1, 2, 4, 6])  # This is for BDBJ
-    elif (sys_name == 'lrzip'):
-        #N_train_all = (l * 432).astype('int')
-        N_train_all = np.multiply(19, [1, 2, 4, 6])  # This is for LRZIP
-    elif (sys_name == 'polly'):
-        #N_train_all = (l * 60000).astype('int')
-        N_train_all = np.multiply(39, [1, 2, 4, 6])  # This is for POLLY
-    elif (sys_name == 'vp9'):
-        #N_train_all = (l * 216000).astype('int')
-        N_train_all = np.multiply(41, [1, 2, 4, 6])  # This is for VP9
-    elif (sys_name == 'Dune'):
-        #N_train_all = (l * 2304).astype('int')
-        N_train_all = np.asarray([49, 78, 384, 600])  # This is for Dune
-    elif (sys_name == 'hipacc'):
-        #N_train_all = (l * 13485).astype('int')
-        N_train_all = np.asarray([261, 528, 736, 1281])  # This is for hipacc
-    elif (sys_name == 'hsmgp'):
-        #N_train_all = (l * 3456).astype('int')
-        N_train_all = np.asarray([77, 173, 384, 480])  # This is for hsmgp
-    elif (sys_name == 'javagc'):
-        #N_train_all = (l * 166975).astype('int')
-        N_train_all = np.asarray([855, 2571, 3032, 5312])  # This is for javagc
-    elif (sys_name == 'sac'):
-        #N_train_all = (l * 62523).astype('int')
-        N_train_all = np.asarray([2060, 2295, 2499, 3261])  # This is for sac
-    else:
-        raise AssertionError("Unexpected value of 'sys_name'!")
-
-    return N_train_all
-
-def seed_generator(sys_name, sample_size):
-    """
-    Generate the initial seed for each sample size (to match the seed of the results in the paper)
-    This is just the initial seed, for each experiment, the seeds will be equal the initial seed + the number of the experiment
-
-    Args:
-        sys_name: [string] the name of the dataset
-        sample_size: [int] the total number of samples
-    """
-
-    N_train_all = system_samplesize(sys_name)
-    if sample_size in N_train_all:
-        seed_o = np.where(N_train_all == sample_size)[0][0]
-    else:
-        seed_o = np.random.randint(1, 101)
-
-    return seed_o
 
 class DataPreproc():
     """ Generic class for data preprocessing """
@@ -76,7 +16,8 @@ class DataPreproc():
         self.__read_whole_data()
         self.training_index = training_index
         self.testing_index = testing_index
-    
+
+
     def __read_whole_data(self):
         # print('Read whole dataset ' + self.sys_name + ' from csv file ...')
         # self.whole_data = genfromtxt(self.data_dir, delimiter=',', skip_header=1)
@@ -85,7 +26,8 @@ class DataPreproc():
 
         self.X_all = self.whole_data[:, 0:self.config_num]
         self.Y_all = self.whole_data[:, self.config_num][:, np.newaxis]
-    
+
+
     def __normalize(self, X, Y):
         """
         Normalize the data and labels
@@ -102,7 +44,8 @@ class DataPreproc():
         Y_sample = np.divide(Y, max_Y)
 
         return X_sample, Y_sample, max_X, np.array([max_Y])
-    
+
+
     def __normalize_gaussian(self, X, Y):
         """
         Normalize the data and labels
@@ -119,7 +62,8 @@ class DataPreproc():
         Y_sample = (Y - mean_Y) / (std_Y + (std_Y == 0) * .001)
 
         return X_sample, Y_sample, mean_X, std_X, mean_Y, std_Y
-    
+
+
     def get_train_valid_samples(self, gnorm=False):
         """
         Args:
@@ -149,6 +93,7 @@ class DataPreproc():
             Y_valid_norm = np.divide(Y_valid, max_Y)
 
             return X_train_norm, Y_train_norm, X_valid_norm, Y_valid_norm, max_Y
+
 
     def get_train_test_samples(self, gnorm=False):
         # np.random.seed(seed)

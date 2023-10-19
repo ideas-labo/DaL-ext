@@ -1,4 +1,4 @@
-from utils.HINNPerf_data_preproc import system_samplesize, seed_generator, DataPreproc
+from utils.HINNPerf_data_preproc import DataPreproc
 import numpy as np
 import time
 import tensorflow as tf
@@ -6,6 +6,7 @@ import tensorflow as tf
 
 class ModelRunner():
     """Generic class for training models"""
+
 
     def __init__(self, data_preproc, model_class, max_epoch=1000):
         """
@@ -16,6 +17,7 @@ class ModelRunner():
         self.data_preproc = data_preproc
         self.model_class = model_class
         self.max_epoch = max_epoch
+
 
     def train(self, config):
         """
@@ -70,6 +72,7 @@ class ModelRunner():
 
         return abs_error_train, abs_error_val
 
+
     def test(self, best_config):
         if best_config['gnorm']:
             X_train, Y_train, X_test, Y_test, mean_Y, std_Y = self.data_preproc.get_train_test_samples(
@@ -110,6 +113,7 @@ class ModelRunner():
 
         return Y_pred_test.ravel(), np.mean(rel_error) * 100
 
+
     def get_rel_error(self, best_config):
         if best_config['gnorm']:
             X_train, Y_train, X_test, Y_test, mean_Y, std_Y = self.data_preproc.get_train_test_samples(
@@ -144,11 +148,12 @@ class ModelRunner():
         else:
             Y_pred_test = max_Y * Y_pred_test
         rel_error = (np.abs(np.divide(Y_test.ravel() - Y_pred_test.ravel(), Y_test.ravel())))
-        print('Prediction relative error (%): {:.2f}'.format(np.mean(rel_error) * 100))
+        # print('Prediction relative error (%): {:.2f}'.format(np.mean(rel_error) * 100))
 
         model.finalize()
 
         return rel_error
+
 
     def get_rel_error_and_predictions(self, best_config):
         if best_config['gnorm']:
@@ -184,7 +189,7 @@ class ModelRunner():
         else:
             Y_pred_test = max_Y * Y_pred_test
         rel_error = (np.abs(np.divide(Y_test.ravel() - Y_pred_test.ravel(), Y_test.ravel())))
-        print('Prediction relative error (%): {:.2f}'.format(np.mean(rel_error) * 100))
+        # print('Prediction relative error (%): {:.2f}'.format(np.mean(rel_error) * 100))
 
         model.finalize()
 

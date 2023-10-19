@@ -1,17 +1,19 @@
 import os
-import numpy as np
 import math
-from numpy import genfromtxt
-from sklearn.neighbors import KNeighborsRegressor
-from sklearn.tree import DecisionTreeRegressor
-from sklearn.linear_model import LinearRegression
-from sklearn.kernel_ridge import KernelRidge
+import numpy as np
 from sklearn.svm import SVR
-from sklearn.ensemble import RandomForestRegressor
-from sklearn.model_selection import GridSearchCV
+from numpy import genfromtxt
 from sklearn.tree import _tree
+from sklearn.kernel_ridge import KernelRidge
+from sklearn.tree import DecisionTreeRegressor
+from sklearn.preprocessing import OneHotEncoder
+from sklearn.model_selection import GridSearchCV
+from sklearn.neighbors import KNeighborsRegressor
+from sklearn.linear_model import LinearRegression
+from sklearn.ensemble import RandomForestRegressor
 import warnings
 warnings.filterwarnings("ignore")
+
 
 def get_sample_sizes(subject_system):
     if subject_system == 'Apache_AllNumeric':
@@ -38,9 +40,9 @@ def get_sample_sizes(subject_system):
         sample_sizes = [16,32,48,64,80]
     return sample_sizes
 
+
 def load_data(dir_data):
     whole_data = genfromtxt(dir_data, delimiter=',', skip_header=1)
-
     # encode numerical features
     def is_col_cat(mat, i):
         return len(np.unique(mat[:, i])) > 2
@@ -48,12 +50,11 @@ def load_data(dir_data):
         return [i for i in range(mat.shape[-1]) if is_col_cat(mat, i)]
     features = whole_data[:, 0:-1]
     categorical_cols = get_categorical_cols(features)
-    non_categorical_cols = [i for i in range(features.shape[-1]) if i not in categorical_cols]
+    # non_categorical_cols = [i for i in range(features.shape[-1]) if i not in categorical_cols]
     if len(categorical_cols) > 0:
         encoder = OneHotEncoder()
         one_hot_features = encoder.fit_transform(features).toarray()
         whole_data = np.concatenate((one_hot_features, whole_data[:, -1][:, np.newaxis]), axis=1)
-
     return whole_data
 
 
@@ -238,16 +239,12 @@ def recursive_dividing(node, depth, tree_, X, samples=[], max_depth=1, min_sampl
                     right_samples.append(samples[i_sample])
             # check if the minimum number of samples is statisfied
             if (len(left_samples) <= min_samples or len(right_samples) <= min_samples):
-                print('{}Not enough samples to cluster with {} and {} samples'.format(indent,
-                                                                                      len(left_samples),
-                                                                                      len(right_samples)))
+                # print('{}Not enough samples to cluster with {} and {} samples'.format(indent, len(left_samples), len(right_samples)))
                 cluster_indexes_all.append(samples)
             else:
-                print("{}{} samples with feature {} <= {}:".format(indent, len(left_samples), name,
-                                                                   threshold))
+                # print("{}{} samples with feature {} <= {}:".format(indent, len(left_samples), name, threshold))
                 cluster_indexes_all = recursive_dividing(tree_.children_left[node], depth + 1, tree_, X, left_samples, max_depth, min_samples, cluster_indexes_all)
-                print("{}{} samples with feature {} > {}:".format(indent, len(right_samples), name,
-                                                                  threshold))
+                # print("{}{} samples with feature {} > {}:".format(indent, len(right_samples), name, threshold))
                 cluster_indexes_all = recursive_dividing(tree_.children_right[node], depth + 1, tree_, X, right_samples, max_depth, min_samples, cluster_indexes_all)
         else:
             cluster_indexes_all.append(samples)
