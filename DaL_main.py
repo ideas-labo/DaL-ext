@@ -32,11 +32,11 @@ if __name__ == "__main__":
 
     # get all available datasets
     file_names = []
-    for home, dirs, files in os.walk('Data/'.format()):
+    for home, dirs, files in os.walk('data/'.format()):
         for filename in files:
             file_names.append(filename)
     file_names.sort()
-    dir_datas = ['Data/{}'.format(file_name) for file_name in file_names]
+    dir_datas = ['data/{}'.format(file_name) for file_name in file_names]
     # for temp, temp_file in enumerate(file_names):
     #     print('{}-{} '.format(temp, temp_file))
     print('\nRuning {}, save_results: {}, test_mode: {}, run{}-{}, depth_selection_mode: {}, selected_sizes: {}, selected_datasets: {}...'.format(learning_model, save_results, test_mode, start_run, end_run, depth_selection_mode, selected_sizes, selected_datasets))
@@ -86,11 +86,12 @@ if __name__ == "__main__":
                                                                  seed)
                         saving_dir = '{}/{}.csv'.format(saving_folder, file_start)
                         if not os.path.exists('{}/{}.csv'.format(saving_folder, file_start)):
-                            saving_table = {'Run': [], 'MRE': [], 'Time': [], 'Time_dividing':[], 'Time_training':[], 'Time_predicting':[], 'num_block': [], 'num_layer_pb':[], 'lamda': [], 'gnorm': [], 'lr': [], 'max_epoch': [max_epoch]}
+                            saving_table = {'Run': [], 'MRE': [], 'Time': [], 'Time_adapting':[], 'Time_dividing':[], 'Time_training':[], 'Time_predicting':[], 'num_block': [], 'num_layer_pb':[], 'lamda': [], 'gnorm': [], 'lr': [], 'max_epoch': [max_epoch]}
                             for temp_run in range(30):
                                 saving_table['Run'].append(temp_run + 1)
                                 saving_table['MRE'].append('None')
                                 saving_table['Time'].append('None')
+                                saving_table['Time_adapting'].append('None')
                                 saving_table['Time_dividing'].append('None')
                                 saving_table['Time_training'].append('None')
                                 saving_table['Time_predicting'].append('None')
@@ -190,6 +191,7 @@ if __name__ == "__main__":
                                     saving_table['Run'][ne] = ne + 1
                                     saving_table['MRE'][ne] = rel_error
                                     saving_table['Time'][ne] = total_time
+                                    saving_table['Time_adapting'][ne] = time_adapting_depth
                                     saving_table['Time_dividing'][ne] = time_dividing
                                     saving_table['Time_training'][ne] = time_training
                                     saving_table['Time_predicting'][ne] = time_predicting
@@ -302,6 +304,7 @@ if __name__ == "__main__":
                                     saving_table['Run'][ne] = ne + 1
                                     saving_table['MRE'][ne] = rel_errors
                                     saving_table['Time'][ne] = total_time
+                                    saving_table['Time_adapting'][ne] = time_adapting_depth
                                     saving_table['Time_dividing'][ne] = time_dividing
                                     saving_table['Time_training'][ne] = time_training
                                     saving_table['Time_predicting'][ne] = time_predicting
