@@ -6,7 +6,7 @@
  > In this paper, we propose a model-agnostic and sparsity-robust framework for predicting configuration performance, dubbed **DaL**, 
  based on the new paradigm of dividable learning that builds a model via "divide-and-learn". To handle sample sparsity, 
  the samples from the configuration landscape are divided into **distant divisions**, for each of which we build a sparse local model, 
- e.g., **regularized Deep Neural Network**, to deal with the feature sparsity. A newly given configuration would then be assigned 
+ e.g., **regularized Hierarchical Interaction Neural Network**, to deal with the feature sparsity. A newly given configuration would then be assigned 
  to the right model of division for the final prediction. Further, *DaL* adaptively determines the **optimal number of divisions** 
  required for a system and sample size without any extra training or profiling. 
  > 
