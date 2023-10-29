@@ -22,7 +22,7 @@
 This repository contains the **key codes**, **full data used**, and **raw experiment results** for the paper.
 
 # Documents
-- **Data**:
+- **data**:
 performance datasets of 12 subject systems as specified in the paper.
 
 - **results**:
