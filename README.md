@@ -34,6 +34,9 @@ contains utility functions to build DNN models.
 - **DaL_main.py**: 
 the *main program* for using DaL, which automatically reads data from csv files, trains and evaluates, and save the results.
 
+- **SLR_full_list.xlsb**: 
+The full list of systematic literature review studies that are related to feature sparsity, as mentioned in the paper.
+
 - **requirements.txt**:
 the necessary packages required to run the program.
 
