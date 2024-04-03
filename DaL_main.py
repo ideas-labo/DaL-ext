@@ -126,7 +126,7 @@ if __name__ == "__main__":
 
                             # compute the weights of each feature using Mutual Information, for eliminating insignificant features
                             weights = []
-                            feature_weights = mutual_info_regression(whole_data[non_zero_indexes, 0:N_features], whole_data[non_zero_indexes, -1], random_state=0)
+                            feature_weights = mutual_info_regression(whole_data[training_index, 0:N_features], whole_data[training_index, -1], random_state=0)
                             for i in range(N_features):
                                 weight = feature_weights[i]
                                 # print('Feature {} weight: {}'.format(i, weight))
