@@ -26,6 +26,8 @@ def get_sample_sizes(subject_system):
         sample_sizes = [224,692,1000,1365,1612]
     elif subject_system == 'Lrzip':
         sample_sizes = [127,295,386,485,907]
+    elif subject_system == 'VP8':
+        sample_sizes = [121,273,356,467,830]
     elif subject_system == 'hipacc_AllNumeric':
         sample_sizes = [261,528,736,1281,2631]
     elif subject_system == 'hsmgp_AllNumeric':

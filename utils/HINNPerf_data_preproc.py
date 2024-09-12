@@ -88,6 +88,7 @@ class DataPreproc():
 
             return X_train_norm, Y_train_norm, X_valid_norm, Y_valid_norm, mean_Y, std_Y
         else:
+            # X_train and Y_train contain the training samples
             X_train_norm, Y_train_norm, max_X, max_Y = self.__normalize(X_train, Y_train)
             X_valid_norm = np.divide(X_valid, max_X)
             Y_valid_norm = np.divide(Y_valid, max_Y)

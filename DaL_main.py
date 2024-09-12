@@ -214,8 +214,8 @@ if __name__ == "__main__":
                                     if i > 0:  # the samples and labels for each cluster
                                         total_index = total_index + cluster_indexes[i]
                                         clusters = np.hstack((clusters, np.ones(int(len(cluster_indexes[i]))) * i))
-                                # get max_X for scaling
-                                max_X = np.amax(whole_data[total_index, 0:N_features], axis=0)  # scale X to 0-1
+                                # get max_X for scaling, where total_index contains samples in all clusters
+                                max_X = np.amax(whole_data[total_index, 0:N_features], axis=0)  # total_index contains samples in all clusters
                                 if 0 in max_X:
                                     max_X[max_X == 0] = 1
 
@@ -271,7 +271,9 @@ if __name__ == "__main__":
                                     print('\t>> Learning division {}... ({} samples)'.format(i + 1, len(cluster_indexes[i])))
                                     # train a local DNN model using the optimal hyperparameters
                                     data_gen = DataPreproc(whole_data, cluster_indexes[i], testing_clusters[i])
+                                    # the error rates for all testing samples of a division
                                     runner = ModelRunner(data_gen, MLPHierarchicalModel, max_epoch=max_epoch)
+                                    # store all the error rates in a list
                                     rel_error = runner.get_rel_error(config[i])
                                     rel_errors += list(rel_error)
                                 rel_errors = np.mean(rel_errors) * 100
