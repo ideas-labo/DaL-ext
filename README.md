@@ -45,7 +45,7 @@ the necessary packages required to run the program.
 1. Download all the files into the same folder/clone the repository.
 
 2. Install the specified version of Python and Tensorflow:
-the codes have been tested with **Python 3.6 - 3.9** and **Tensorflow 2.x**, other versions might cause errors.
+the codes have been tested with **Python 3.6 - 3.9** and **Tensorflow 2.12 - 2.15**, other versions might cause errors.
 
 3. Install all missing packages according to **requirements.txt** and runtime messages.
 
@@ -125,7 +125,7 @@ Below are the repositories of the SOTA performance prediction models, which are 
 
 - [HINNPerf](https://drive.google.com/drive/folders/1qxYzd5Om0HE1rK0syYQsTPhTQEBjghLh)
 
-    A novel deep learning performance model that utilize hierarchical interaction neural network to achieve better prediction accuracy.
+    A novel deep learning performance model that utilizes hierarchical interaction neural network to achieve better prediction accuracy.
 
 - [DeepPerf](https://github.com/DeepPerf/DeepPerf)
 
